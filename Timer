@@ -1,0 +1,44 @@
+package com.example.leena.test;
+
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
+
+import java.util.Timer;
+import java.util.TimerTask;
+
+public class MainActivity extends AppCompatActivity {
+    Timer teleOPTimer;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        teleOPTimer = new Timer();
+        teleOPTimer.schedule(switchToTeleOP, 12000);
+    }
+
+    TimerTask switchToTeleOP = new TimerTask() {
+        @Override
+        public void run() {
+            for (int i = 3; i >= 0; i--) {
+                final int countdown = i;
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(MainActivity.this, "Teleop starts in " + countdown, Toast.LENGTH_SHORT).show();
+                    }
+                });
+                try {
+                    Thread.sleep(2000);
+                }
+                catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    };
+}
